@@ -16,8 +16,11 @@ For help getting started with Flutter development, view the
 samples, guidance on mobile development, and a full API reference.
 
 ## FIREBASE
-npm install -g firebase-tools
-firebase login
-flutter pub global activate flutterfire_cli
-flutterfire configure
+- npm install -g firebase-tools
+
+- firebase login
+
+- flutter pub global activate flutterfire_cli
+
+- flutterfire configure
 
