@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "908139891089",
+    "project_id": "my-msg-df2f2",
+    "storage_bucket": "my-msg-df2f2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:908139891089:android:62a4dce487e8545396f230",
+        "android_client_info": {
+          "package_name": "com.example.app_msg"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBNurh_xSfP0W8sgscDWcjpFAsx9p8dUHE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
