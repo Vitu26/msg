@@ -1,17 +1,37 @@
+import 'package:app_msg/services/auth/auth_servide.dart';
 import 'package:app_msg/components/my_button.dart';
 import 'package:app_msg/components/my_textfield.dart';
 import 'package:flutter/material.dart';
 
-class RegisterPage extends StatelessWidget {
+class LoginPage extends StatelessWidget {
   final TextEditingController email = TextEditingController();
   final TextEditingController pass = TextEditingController();
-  final TextEditingController confirmPass = TextEditingController();
 
+  //criando o tap para ir ao register
   final void Function()? onTap;
 
-  RegisterPage({super.key, required this.onTap});
+  LoginPage({super.key, required this.onTap});
 
-  void register(){}
+  //login method
+  void login(BuildContext context) async {
+    //auth service
+    final authService = AuthService();
+
+    //try login
+    try {
+      await authService.signInWithEmailPassword(
+        email.text,
+        pass.text,
+      );
+    } catch (e) {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text(e.toString()),
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +51,7 @@ class RegisterPage extends StatelessWidget {
           ),
           //welcome back
           Text(
-            "Vamos criar uma conta para você!!",
+            "Bem vindo de volta!! Sentimos sua falta",
             style: TextStyle(
               color: Theme.of(context).colorScheme.primary,
               fontSize: 16,
@@ -57,20 +77,12 @@ class RegisterPage extends StatelessWidget {
             controller: pass,
           ),
           const SizedBox(
-            height: 10,
-          ),
-          MyTextField(
-            hintText: 'Confirmar password',
-            obscure: true,
-            controller: confirmPass,
-          ),
-          const SizedBox(
             height: 25,
           ),
           //login button
           MyButton(
-            text: 'Registrar',
-            onTap: register,
+            text: 'Login',
+            onTap: () => login(context),
           ),
           const SizedBox(
             height: 25,
@@ -80,13 +92,13 @@ class RegisterPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                'Já tem uma conta? ',
+                'Não é membro? ',
                 style: TextStyle(color: Theme.of(context).colorScheme.primary),
               ),
               GestureDetector(
                 onTap: onTap,
                 child: Text(
-                  'Entre agora!',
+                  'Registre agora!',
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Theme.of(context).colorScheme.primary),

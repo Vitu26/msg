@@ -1,33 +1,40 @@
-import 'package:app_msg/auth/auth_servide.dart';
+import 'package:app_msg/services/auth/auth_servide.dart';
 import 'package:app_msg/components/my_button.dart';
 import 'package:app_msg/components/my_textfield.dart';
 import 'package:flutter/material.dart';
 
-class LoginPage extends StatelessWidget {
+class RegisterPage extends StatelessWidget {
   final TextEditingController email = TextEditingController();
   final TextEditingController pass = TextEditingController();
+  final TextEditingController confirmPass = TextEditingController();
 
-  //criando o tap para ir ao register
   final void Function()? onTap;
 
-  LoginPage({super.key, required this.onTap});
+  RegisterPage({super.key, required this.onTap});
 
-  //login method
-  void login(BuildContext context) async {
-    //auth service
-    final authService = AuthService();
-
-    //try login
-    try {
-      await authService.signInWithEmailPassword(
-        email.text,
-        pass.text,
+  //register method
+  void register(BuildContext context) async{
+    //pegando o auth service
+    final _auth = AuthService();
+    //passwords iguais -> criando usuário
+    if(pass.text == confirmPass.text ){
+      try{
+        _auth.signUpWithEmailPassword(email.text, pass.text);
+      }catch(e){
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text(e.toString()),
+        ),
       );
-    } catch (e) {
+      }
+    }
+    //passwords diferentes -> mostrar erro na tela
+    else{
       showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: Text(e.toString()),
+          context: context,
+          builder: (context) => const AlertDialog(
+            title: Text("As senhas não são iguais, por favor corrija as senhas!"),
         ),
       );
     }
@@ -51,7 +58,7 @@ class LoginPage extends StatelessWidget {
           ),
           //welcome back
           Text(
-            "Bem vindo de volta!! Sentimos sua falta",
+            "Vamos criar uma conta para você!!",
             style: TextStyle(
               color: Theme.of(context).colorScheme.primary,
               fontSize: 16,
@@ -77,12 +84,20 @@ class LoginPage extends StatelessWidget {
             controller: pass,
           ),
           const SizedBox(
+            height: 10,
+          ),
+          MyTextField(
+            hintText: 'Confirmar password',
+            obscure: true,
+            controller: confirmPass,
+          ),
+          const SizedBox(
             height: 25,
           ),
           //login button
           MyButton(
-            text: 'Login',
-            onTap: () => login(context),
+            text: 'Registrar',
+            onTap: () => register(context),
           ),
           const SizedBox(
             height: 25,
@@ -92,13 +107,13 @@ class LoginPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                'Não é membro? ',
+                'Já tem uma conta? ',
                 style: TextStyle(color: Theme.of(context).colorScheme.primary),
               ),
               GestureDetector(
                 onTap: onTap,
                 child: Text(
-                  'Registre agora!',
+                  'Entre agora!',
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Theme.of(context).colorScheme.primary),
